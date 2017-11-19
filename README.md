@@ -1,6 +1,6 @@
-# Bigcomputebench
+# BigComputeBench
 
-Basecamp workstation for Azure Batch &amp; BigCompute
+Basecamp workbench VM for Azure Batch &amp; BigCompute
 
 This template deploys a single VM pre-configured with all the common tools required to manage an Azure Batch deployment. 
 
@@ -19,3 +19,4 @@ Deployment takes around 5 minutes.
 * Azcopy & dotnet
 * Redis client tools
 * Docker 
+* Example Azure Batch Recipes & Templates
