@@ -18,8 +18,7 @@ Deployment takes around 5 minutes.
 * Azcopy & dotnet
 * Redis client tools
 * Docker 
+* Singularity
 * Example Azure Batch Recipes & Templates
 
 Only Ubuntu 16.04-LTS & 17.10 are supported at the moment. 
-
-

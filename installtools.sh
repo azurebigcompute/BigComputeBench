@@ -12,7 +12,6 @@ if [[ $(id -u) -ne 0 ]] ; then
 fi
 
 ADMIN=$1
-
 # Linux distro detection remains a can of worms, just pass it in here:
 VMIMAGE=$2
 # Or uncomment one of these if running this script by hand. 
@@ -106,7 +105,7 @@ echo "# docker #################################################################
 # Install Batch Shipyard - Ensure you are NOT root for this section
 # https://github.com/Azure/batch-shipyard/blob/master/docs/01-batch-shipyard-installation.md
 # credit to Karl Podesta for this little hack:
-su - $ADMIN -c 'SYVERSION="2.9.4";\
+su - $ADMIN -c 'SYVERSION="3.1.0";\
 wget https://github.com/Azure/batch-shipyard/archive/$SYVERSION.tar.gz;\
 tar -xvf $SYVERSION.tar.gz; \
 cd batch-shipyard-$SYVERSION;\
@@ -118,10 +117,10 @@ echo "# shipyard ###############################################################
 
 # Install Singularity - Courtesy of Ben Hummerstone
 # https://github.com/Azure/azure-quickstart-templates/tree/master/centos-singularity
-VERSION=2.4.2
-wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
-tar xvf singularity-$VERSION.tar.gz
-cd singularity-$VERSION
+SIVERSION=2.4.2
+wget https://github.com/singularityware/singularity/releases/download/$SIVERSION/singularity-$SIVERSION.tar.gz
+tar xvf singularity-$SIVERSION.tar.gz
+cd singularity-$SIVERSION
 ./configure --prefix=/usr/local
 make
 make install
