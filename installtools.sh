@@ -25,6 +25,9 @@ OFFER=`echo $VMIMAGE| awk -F ":" '{print $2}'`
 SKU=`echo $VMIMAGE| awk -F ":" '{print $3}'`
 OSVERS=`echo $VMIMAGE| awk -F ":" '{print $4}'`
 
+echo "##############################################################################"
+echo "Extension $0: $ADMIN, $VMIMAGE"
+
 export DEBIAN_FRONTEND=noninteractive
 echo "* hard memlock unlimited" >> /etc/security/limits.conf
 echo "* soft memlock unlimited" >> /etc/security/limits.conf
@@ -36,11 +39,16 @@ apt-get install -y build-essential g++ git gcc make cmake htop iotop autotools-d
 pip3 install --upgrade pip
 pip3 install wheel
 apt-get install -y redis-tools
-echo "##############################################################################"
+echo "# devtools ###################################################################"
 
 # Install azure-cli
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+if [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "16.04-LTS" ]]; then
+	echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli xenial main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+elif [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "17.10" ]]; then
+	echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli artful main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+fi
+
 apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
 apt-get -y install -y apt-transport-https
 apt-get -y update && apt-get install -y azure-cli
@@ -75,7 +83,7 @@ mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 
 if [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "16.04-LTS" ]]; then
 	echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list
-elif [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "16.10" ]]; then
+elif [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "17.10" ]]; then
 	echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-artful-prod artful main" > /etc/apt/sources.list.d/dotnetdev.list
 fi
 apt-get -y install dotnet-sdk-2.1.4
