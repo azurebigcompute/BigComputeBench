@@ -69,9 +69,11 @@ EOF
 chown $ADMIN /home/$ADMIN/.azure
 echo "# azurecli ###################################################################"
 #
-# Install azure batch cli extensions
+# Install azure batch cli extensions & examples
 # https://github.com/Azure/azure-batch-cli-extensions
-/opt/az/bin/python3 -m pip install azure-cli-batch-extensions
+#/opt/az/bin/python3 -m pip install azure-cli-batch-extensions
+pip install azure-batch-extensions
+git clone https://github.com/Azure/azure-batch-cli-extensions.git
 echo "#cli extensions###############################################################"
 
 # Install DOTNET & azcopy
