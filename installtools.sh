@@ -49,7 +49,7 @@ elif [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "17.10"
 fi
 
 apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
-apt-get -y install -y apt-transport-https
+apt-get install -y apt-transport-https
 apt-get -y update && apt-get install -y azure-cli
 # Configure azure cli
 # https://docs.microsoft.com/en-us/cli/azure/format-output-azure-cli?view=azure-cli-latest
@@ -87,8 +87,9 @@ elif [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "17.10"
 echo $SKU
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-artful-prod artful main" > /etc/apt/sources.list.d/dotnetdev.list
 fi
-sleep 2
-apt-get -y install dotnet-sdk-2.1.4
+sudo apt-get update
+apt-get install -y dotnet-sdk-2.1.4
+dotnet --version
 echo "# dotnet ######################################################################"
 
 wget -O azcopy.tar.gz https://aka.ms/downloadazcopyprlinux
@@ -102,7 +103,7 @@ apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 apt-get install -y apt-transport-https ca-certificates software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-sleep 5
+sudo apt-get update
 apt-get install -y docker-ce
 echo "# docker #####################################################################"
 
