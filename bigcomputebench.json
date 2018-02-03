@@ -240,7 +240,7 @@
         "imageReference_Canonical:UbuntuServer:17.10": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
-            "sku": "17.04",
+            "sku": "17.10",
             "version": "latest"
         },
         "imageReference": "[variables(concat('imageReference_',parameters('image')))]",
