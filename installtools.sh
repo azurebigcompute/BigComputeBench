@@ -35,7 +35,7 @@ apt-get -y update
 #apt-get -y upgrade
 
 # Install dev & sysadmin tools
-apt-get install -y build-essential g++ git gcc make cmake htop iotop autotools-dev libicu-dev libbz2-dev libboost-all-dev libssl-dev libffi-dev libpython-dev python-dev python-pip pip python3-pip zip
+apt-get install -y build-essential g++ git gcc make cmake htop iotop autotools-dev libicu-dev libbz2-dev libboost-all-dev libssl-dev libffi-dev libpython-dev python-dev python-pip python3-pip zip squashfs-tools
 pip3 install --upgrade pip
 pip3 install wheel
 apt-get install -y redis-tools
@@ -115,3 +115,14 @@ SHIPYARD=`pwd`;\
 echo "export PATH=$PATH:$HOME/.local/bin:$SHIPYARD" >> ~/.bashrc
 '
 echo "# shipyard ###################################################################"
+
+# Install Singularity - Courtesy of Ben Hummerstone
+# https://github.com/Azure/azure-quickstart-templates/tree/master/centos-singularity
+VERSION=2.4.2
+wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
+tar xvf singularity-$VERSION.tar.gz
+cd singularity-$VERSION
+./configure --prefix=/usr/local
+make
+make install
+echo "# singularity ###################################################################"
