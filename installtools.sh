@@ -3,7 +3,7 @@
 # Azure Extension Script:
 # Install essential tools for Azure Big Compute / Azure Batch
 #
-# Tested On: Ubuntu 17.04 Only
+# Tested On: Ubuntu 16.04 && 17.10
 #
 ###############################################################################
 if [[ $(id -u) -ne 0 ]] ; then
@@ -13,6 +13,18 @@ fi
 
 ADMIN=$1
 
+# Linux distro detection remains a can of worms, just pass it in here:
+VMIMAGE=$2
+# Or uncomment one of these if running this script by hand. 
+#VMIMAGE="microsoft-ads:linux-data-science-vm-ubuntu:1.1.2"
+#VMIMAGE="Canonical:UbuntuServer:16.04-LTS"
+#VMIMAGE="Canonical:UbuntuServer:17.10"
+
+PUBLISHER=`echo $VMIMAGE| awk -F ":" '{print $1}'`
+OFFER=`echo $VMIMAGE| awk -F ":" '{print $2}'`
+SKU=`echo $VMIMAGE| awk -F ":" '{print $3}'`
+OSVERS=`echo $VMIMAGE| awk -F ":" '{print $4}'`
+
 export DEBIAN_FRONTEND=noninteractive
 echo "* hard memlock unlimited" >> /etc/security/limits.conf
 echo "* soft memlock unlimited" >> /etc/security/limits.conf
@@ -20,7 +32,7 @@ apt-get -y update
 #apt-get -y upgrade
 
 # Install dev & sysadmin tools
-sudo apt-get install -y build-essential g++ git gcc make cmake htop autotools-dev libicu-dev libbz2-dev libboost-all-dev libssl-dev libffi-dev libpython-dev python-dev python-pip pip python3-pip zip
+apt-get install -y build-essential g++ git gcc make cmake htop iotop autotools-dev libicu-dev libbz2-dev libboost-all-dev libssl-dev libffi-dev libpython-dev python-dev python-pip pip python3-pip zip
 pip3 install --upgrade pip
 pip3 install wheel
 apt-get install -y redis-tools
@@ -60,11 +72,15 @@ echo "#cli extensions###########################################################
 # https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-zesty-prod zesty main" > /etc/apt/sources.list.d/dotnetdev.list
-apt-get install -y dotnet-sdk-2.0.0
+
+if [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "16.04-LTS" ]]; then
+	echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list
+elif [[ $PUBLISHER == "Canonical" && $OFFER == "UbuntuServer" && $SKU == "16.10" ]]; then
+	echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-artful-prod artful main" > /etc/apt/sources.list.d/dotnetdev.list
+fi
+apt-get -y install dotnet-sdk-2.1.4
 echo "# dotnet ######################################################################"
-#echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-zesty-prod zesty main" > /etc/apt/sources.list.d/microsoft-prod.list
-#sudo apt-get install azcopy
+
 wget -O azcopy.tar.gz https://aka.ms/downloadazcopyprlinux
 tar -xvf azcopy.tar.gz
 ./install.sh

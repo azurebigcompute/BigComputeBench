@@ -150,16 +150,8 @@
             "defaultValue": "Canonical:UbuntuServer:16.04-LTS",
             "allowedValues": [
                 "microsoft-ads:linux-data-science-vm-ubuntu:1.1.2",
-                "Canonical:UbuntuServer:17.04",
-                "Canonical:UbuntuServer:16.04-LTS",
-                "Canonical:UbuntuServer:16.10",
-                "OpenLogic:CentOS:6.5",
-                "OpenLogic:CentOS:6.8",
-                "OpenLogic:CentOS:7.1",
-                "OpenLogic:CentOS:7.2",
-                "OpenLogic:CentOS:7.3",
-                "RedHat:RHEL:7.3",
-                "SUSE:SLES:12-SP1"
+                "Canonical:UbuntuServer:17.10",
+                "Canonical:UbuntuServer:16.04-LTS"
             ],
             "metadata": {
                 "description": "Linux OS version to deploy on VM"
@@ -245,58 +237,10 @@
             "sku": "16.04-LTS",
             "version": "latest"
         },
-        "imageReference_Canonical:UbuntuServer:16.10": {
-            "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "16.10",
-            "version": "latest"
-        },
-        "imageReference_Canonical:UbuntuServer:17.04": {
+        "imageReference_Canonical:UbuntuServer:17.10": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
             "sku": "17.04",
-            "version": "latest"
-        },
-        "imageReference_OpenLogic:CentOS-HPC:6.5": {
-            "publisher": "OpenLogic",
-            "offer": "CentOS-HPC",
-            "sku": "6.5",
-            "version": "latest"
-        },
-        "imageReference_OpenLogic:CentOS:6.8": {
-            "publisher": "OpenLogic",
-            "offer": "CentOS",
-            "sku": "6.8",
-            "version": "latest"
-        },
-        "imageReference_OpenLogic:CentOS-HPC:7.1": {
-            "publisher": "OpenLogic",
-            "offer": "CentOS-HPC",
-            "sku": "7.1",
-            "version": "latest"
-        },
-        "imageReference_OpenLogic:CentOS:7.2": {
-            "publisher": "OpenLogic",
-            "offer": "CentOS",
-            "sku": "7.2",
-            "version": "latest"
-        },
-        "imageReference_OpenLogic:CentOS:7.3": {
-            "publisher": "OpenLogic",
-            "offer": "CentOS",
-            "sku": "7.3",
-            "version": "latest"
-        },
-        "imageReference_RedHat:RHEL:7.3": {
-            "publisher": "RedHat",
-            "offer": "RHEL",
-            "sku": "7.3",
-            "version": "latest"
-        },
-        "imageReference_SUSE:SLES-HPC:12-SP1": {
-            "publisher": "SUSE",
-            "offer": "SLES-HPC",
-            "sku": "12-SP1",
             "version": "latest"
         },
         "imageReference": "[variables(concat('imageReference_',parameters('image')))]",
