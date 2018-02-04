@@ -260,7 +260,7 @@
         },
         "storageDiskSize": "[variables('StorageMap')[parameters('storageDiskSize')].size]",
         "numStorageDisks": "[parameters('storageDiskCount')]",
-        "imageReference_microsoft-ads:linux-data-science-vm-ubuntu:1.1.7": {
+        "imageReference_microsoft-ads:linux-data-science-vm-ubuntu:latest": {
             "publisher": "microsoft-ads",
             "offer": "linux-data-science-vm-ubuntu",
             "sku": "linuxdsvmubuntu",
