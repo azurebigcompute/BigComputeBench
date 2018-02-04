@@ -73,7 +73,7 @@ echo "# azurecli ###############################################################
 # https://github.com/Azure/azure-batch-cli-extensions
 #/opt/az/bin/python3 -m pip install azure-cli-batch-extensions
 pip install azure-batch-extensions
-git clone https://github.com/Azure/azure-batch-cli-extensions.git
+su - $ADMIN -c 'git clone https://github.com/Azure/azure-batch-cli-extensions.git /home/azureuser/azure-batch-cli-extensions'
 echo "#cli extensions###############################################################"
 
 # Install DOTNET & azcopy
