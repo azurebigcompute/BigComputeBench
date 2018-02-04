@@ -367,7 +367,7 @@
             }
         ],
         "computeApiVersion": "2016-04-30-preview",
-        "networkApiVersion": "2016-06-01",
+        "networkApiVersion": "2016-09-01",
         "storageApiVersion": "2015-06-15"
     },
     "resources": [
