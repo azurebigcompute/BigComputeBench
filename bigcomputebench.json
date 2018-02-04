@@ -407,7 +407,7 @@
             "apiVersion": "[variables('networkApiVersion')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "enableAcceleratedNetworking": true,
+                "enableAcceleratedNetworking": false,
                 "ipConfigurations": [
                     {
                         "name": "[variables('BigComputeBenchIPConfigName')]",
