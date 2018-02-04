@@ -1,6 +1,6 @@
 # BigComputeBench
 
-Basecamp workbench VM for Azure Batch &amp; BigCompute
+Workbench VM for Azure Batch &amp; BigCompute
 
 This template deploys a single VM pre-configured with all the common tools required to manage an Azure Batch deployment. 
 

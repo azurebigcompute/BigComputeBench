@@ -16,8 +16,9 @@
         },
         "rsaPublicKey": {
             "type": "string",
+	    "defaultValue": "",
             "metadata": {
-              "description": "The RSA public key to access the VM."
+              "description": "Optional: The RSA public key to access the VM: long string prefixed ssh-rsa:"
             }
         },
         "vmSku": {
@@ -245,6 +246,7 @@
         "subnetPrefix": "10.1.13.0/24",
         "addressPrefix": "10.1.0.0/16",
         "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
+        "sshKeyPath": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
         "scriptUrl": "https://raw.githubusercontent.com/azurebigcompute/BigComputeBench/master/",
         "StorageMap": {
             "P10": {
@@ -412,6 +414,7 @@
             "apiVersion": "[variables('networkApiVersion')]",
             "location": "[resourceGroup().location]",
             "properties": {
+                "enableAcceleratedNetworking": true,
                 "ipConfigurations": [
                     {
                         "name": "[variables('BigComputeBenchIPConfigName')]",
@@ -583,7 +586,7 @@
                         "ssh": {
                           "publicKeys": [
                             {
-                              "path": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+                              "path": "[variables('sshKeyPath')]",
                               "keyData": "[parameters('rsaPublicKey')]"
                             }
                           ]
