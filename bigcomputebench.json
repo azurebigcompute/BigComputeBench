@@ -14,9 +14,22 @@
                 "description": "Admin password on all VMs."
             }
         },
+        "rsaPublicKey": {
+            "type": "string",
+            "metadata": {
+              "description": "The RSA public key to access the VM."
+            }
+          }
+        },
         "vmSku": {
             "defaultValue": "Standard_F2",
             "allowedValues": [
+                "Standard_B1ms",
+                "Standard_B1s",
+                "Standard_B2ms",
+                "Standard_B2s",
+                "Standard_B4ms",
+                "Standard_B8ms",
                 "Standard_DS1_v2",
                 "Standard_DS2_v2",
                 "Standard_DS3_v2",
@@ -24,7 +37,11 @@
                 "Standard_DS5_v2",
                 "Standard_DS11_v2",
                 "Standard_DS12_v2",
+                "Standard_DS13-2_v2",
+                "Standard_DS13-4_v2",
                 "Standard_DS13_v2",
+                "Standard_DS14-4_v2",
+                "Standard_DS14-8_v2",
                 "Standard_DS14_v2",
                 "Standard_DS15_v2",
                 "Standard_DS2_v2_Promo",
@@ -40,6 +57,11 @@
                 "Standard_F4s",
                 "Standard_F8s",
                 "Standard_F16s",
+                "Standard_D2s_v3",
+                "Standard_D4s_v3",
+                "Standard_D8s_v3",
+                "Standard_D16s_v3",
+                "Standard_D32s_v3",
                 "Standard_A0",
                 "Standard_A1",
                 "Standard_A2",
@@ -48,6 +70,7 @@
                 "Standard_A4",
                 "Standard_A6",
                 "Standard_A7",
+                "Basic_A0",
                 "Basic_A1",
                 "Basic_A2",
                 "Basic_A3",
@@ -82,6 +105,11 @@
                 "Standard_A4_v2",
                 "Standard_A8m_v2",
                 "Standard_A8_v2",
+                "Standard_D2_v3",
+                "Standard_D4_v3",
+                "Standard_D8_v3",
+                "Standard_D16_v3",
+                "Standard_D32_v3",
                 "Standard_H8",
                 "Standard_H16",
                 "Standard_H8m",
@@ -99,6 +127,14 @@
                 "Standard_NV6",
                 "Standard_NV12",
                 "Standard_NV24",
+                "Standard_NC6s_v2",
+                "Standard_NC12s_v2",
+                "Standard_NC24rs_v2",
+                "Standard_NC24s_v2",
+                "Standard_NC6",
+                "Standard_NC12",
+                "Standard_NC24",
+                "Standard_NC24r",
                 "Standard_DS1",
                 "Standard_DS2",
                 "Standard_DS3",
@@ -107,25 +143,11 @@
                 "Standard_DS12",
                 "Standard_DS13",
                 "Standard_DS14",
-                "Standard_NC6",
-                "Standard_NC12",
-                "Standard_NC24",
-                "Standard_NC24r",
-                "Standard_A8",
-                "Standard_A9",
-                "Standard_A10",
-                "Standard_A11",
-                "Standard_D2_v3",
-                "Standard_D4_v3",
-                "Standard_D8_v3",
-                "Standard_D16_v3",
-                "Standard_D32_v3",
+                "Standard_NC6s_v3",
+                "Standard_NC12s_v3",
+                "Standard_NC24rs_v3",
+                "Standard_NC24s_v3",
                 "Standard_D64_v3",
-                "Standard_D2s_v3",
-                "Standard_D4s_v3",
-                "Standard_D8s_v3",
-                "Standard_D16s_v3",
-                "Standard_D32s_v3",
                 "Standard_D64s_v3",
                 "Standard_E2_v3",
                 "Standard_E4_v3",
@@ -137,8 +159,27 @@
                 "Standard_E4s_v3",
                 "Standard_E8s_v3",
                 "Standard_E16s_v3",
+                "Standard_E32-8s_v3",
+                "Standard_E32-16s_v3",
                 "Standard_E32s_v3",
-                "Standard_E64s_v3"
+                "Standard_E64-16s_v3",
+                "Standard_E64-32s_v3",
+                "Standard_E64s_v3",
+                "Standard_F2s_v2",
+                "Standard_F4s_v2",
+                "Standard_F8s_v2",
+                "Standard_F16s_v2",
+                "Standard_F32s_v2",
+                "Standard_F64s_v2",
+                "Standard_F72s_v2",
+                "Standard_ND6s",
+                "Standard_ND12s",
+                "Standard_ND24rs",
+                "Standard_ND24s",
+                "Standard_A8",
+                "Standard_A9",
+                "Standard_A10",
+                "Standard_A11"
             ],
             "type": "string",
             "metadata": {
@@ -393,6 +434,139 @@
             ]
         },
         {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('NSGName')]",
+            "apiVersion": "2017-06-01",
+            "location": "[resourceGroup().location]",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "securityRules": [
+                    {
+                        "name": "default-allow-ssh",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ],
+                "defaultSecurityRules": [
+                    {
+                        "name": "AllowVnetInBound",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow inbound traffic from all VMs in VNET",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 65000,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowAzureLoadBalancerInBound",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow inbound traffic from azure load balancer",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 65001,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DenyAllInBound",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Deny all inbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 65500,
+                            "direction": "Inbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowVnetOutBound",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow outbound traffic from all VMs to all VMs in VNET",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 65000,
+                            "direction": "Outbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowInternetOutBound",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Allow outbound traffic from all VMs to Internet",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "Internet",
+                            "access": "Allow",
+                            "priority": 65001,
+                            "direction": "Outbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DenyAllOutBound",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "description": "Deny all outbound traffic",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 65500,
+                            "direction": "Outbound",
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('BigComputeBenchName')]",
             "apiVersion": "[variables('computeApiVersion')]",
@@ -405,6 +579,19 @@
                     "computerName": "[variables('BigComputeBenchName')]",
                     "adminUsername": "[parameters('adminUsername')]",
                     "adminPassword": "[parameters('adminPassword')]"
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false,
+                        "ssh": {
+                          "publicKeys": [
+                            {
+                              "path": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]"
+                              "keyData": "[parameters('rsaPublicKey')]"
+                            }
+                          ]
+                        }
+                      },
+                      "secrets": []
+                    },
                 },
                 "storageProfile": {
                     "imageReference": "[variables('imageReference')]",
