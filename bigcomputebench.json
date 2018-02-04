@@ -183,7 +183,7 @@
             "type": "string",
             "defaultValue": "Canonical:UbuntuServer:16.04-LTS",
             "allowedValues": [
-                "microsoft-ads:linux-data-science-vm-ubuntu:1.1.7",
+                "microsoft-ads:linux-data-science-vm-ubuntu:latest",
                 "Canonical:UbuntuServer:17.10",
                 "Canonical:UbuntuServer:16.04-LTS"
             ],
@@ -263,7 +263,7 @@
         "imageReference_microsoft-ads:linux-data-science-vm-ubuntu:1.1.7": {
             "publisher": "microsoft-ads",
             "offer": "linux-data-science-vm-ubuntu",
-            "sku": "1.1.7",
+            "sku": "linuxdsvmubuntu",
             "version": "latest"
         },
         "imageReference_Canonical:UbuntuServer:16.04-LTS": {
