@@ -181,7 +181,7 @@
         },
         "image": {
             "type": "string",
-            "defaultValue": "Canonical:UbuntuServer:16.04-LTS",
+            "defaultValue": "Canonical:UbuntuServer:17.10",
             "allowedValues": [
                 "microsoft-ads:linux-data-science-vm-ubuntu:latest",
                 "Canonical:UbuntuServer:17.10",
@@ -266,6 +266,7 @@
             "sku": "linuxdsvmubuntu",
             "version": "latest"
         },
+
         "imageReference_Canonical:UbuntuServer:16.04-LTS": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
