@@ -8,6 +8,8 @@ This template deploys a single VM pre-configured with all the common tools requi
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+![abc](abc.PNG)
+
 Deployment takes around 5 minutes.
 
 ## Tools Auto-Installed:
