@@ -24,6 +24,9 @@ OFFER=`echo $VMIMAGE| awk -F ":" '{print $2}'`
 SKU=`echo $VMIMAGE| awk -F ":" '{print $3}'`
 OSVERS=`echo $VMIMAGE| awk -F ":" '{print $4}'`
 
+wget https://raw.githubusercontent.com/azurebigcompute/BigComputeBench/master/motd
+mv motd /etc
+
 echo "##############################################################################"
 echo "Extension $0: $ADMIN, $VMIMAGE"
 
